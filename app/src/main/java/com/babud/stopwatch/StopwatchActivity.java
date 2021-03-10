@@ -15,18 +15,32 @@ public class StopwatchActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stopwatch);
+        if (savedInstanceState != null){
+            seconds = savedInstanceState.getInt("seconds");
+            running = savedInstanceState.getBoolean("running");
+        }
         runTimer();
     }
+
+    @Override
+    protected void onSaveInstanceState(Bundle savedInstanceState) {
+        savedInstanceState.putInt("seconds", seconds);
+        savedInstanceState.putBoolean("running", running);
+    }
+
     public void onClickStart(View view){
         running = true;
     }
+
     public void onClickStop(View view){
         running = false;
     }
+
     public void onClickReset(View view){
         running = false;
         seconds = 0;
     }
+
     private void runTimer(){
         final TextView timeView = (TextView) findViewById(R.id.time_view);
         final Handler handler = new Handler();
@@ -47,6 +61,5 @@ public class StopwatchActivity extends Activity {
             }
         });
     }
-
 
 }
